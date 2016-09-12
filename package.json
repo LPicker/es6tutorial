@@ -1,0 +1,13 @@
+{
+  "name": "es6-view",
+  "version": "0.0.1",
+  "description": "This can view es6 docs in borwser",
+  "main": "http.js",
+  "dependencies": {
+    "mime": "^1.3.4"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "author": "LianJianjie",
+  "license": "ISC"
+}
