@@ -3,6 +3,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
+var colors = require('colors');
 var port = 1024;
 var cache = {};
 
@@ -24,7 +25,7 @@ function sendData(res, content_type, data){
 
 function sendFile(res, filepath){
 	var base_url = '.';
-	console.log(`\n请求 ${filepath} received!`);
+	console.log(`\n请求 ${filepath} received!`.green);
 	filepath = (filepath === '/' || filepath === '/index.html') ? ('./index.html') : (base_url + filepath);
 	// 充分利用缓存
 	if(cache[filepath]){
@@ -34,12 +35,12 @@ function sendFile(res, filepath){
 	// 读取本地静态文件
 	fs.readFile(filepath, function(err, data){
 		if(err){
-			console.log(`读取本地静态文件${filepath}出错`);
+			console.log(`读取本地静态文件${filepath}出错`.red);
 			send404(res);
 		}else{
 			cache[filepath] = data;
 			cache[filepath+'_content_type'] = mime.lookup(path.basename(filepath));
-			console.log(`正在发送 ${filepath} ……`);
+			console.log(`正在发送 ${filepath} ……`.yellow);
 			sendData(res, cache[filepath+'_content_type'], data);
 		}
 	});
@@ -49,4 +50,4 @@ http.createServer(function(req, res){
 	var filepath = req.url;
 	sendFile(res, filepath);
 }).listen(port);
-console.log(`Server running at http://localhost:${port}/`);
+console.log(`Server running at http://localhost:${port}/`.green);
