@@ -1,4 +1,5 @@
 'use strict'
+var opener = require('opener');
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
@@ -51,3 +52,6 @@ http.createServer(function(req, res){
 	sendFile(res, filepath);
 }).listen(port);
 console.log(`Server running at http://localhost:${port}/`.green);
+if(opener){
+	opener(`http://localhost:${port}/`);
+}
